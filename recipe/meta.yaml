@@ -10,18 +10,18 @@ source:
   md5: 970ebfa8b65c4a181fcdd788ee71dd38
 
 build:
-  number: 0
+  number: 1
   skip: True  # [win]
 
 requirements:
 
   build:
-    - hdf5
+    - hdf5 1.8.17|1.8.17.*
     - mpich
     - gcc  # [not win]
 
   run:
-    - hdf5
+    - hdf5 1.8.17|1.8.17.*
     - mpich
     - libgfortran  # [not win]
 
