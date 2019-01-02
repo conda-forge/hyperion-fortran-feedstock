@@ -28,6 +28,8 @@ requirements:
     - mpich
 
 test:
+  requires:
+    - {{ compiler('fortran') }}
   files:
     - amr.rtin
     - car.rtin
