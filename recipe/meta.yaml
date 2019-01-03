@@ -15,7 +15,6 @@ build:
   merge_build_host: True
 
 requirements:
-
   build:
     - {{ compiler('fortran') }}
     - {{ compiler('c') }}
@@ -23,7 +22,6 @@ requirements:
   host:
     - hdf5 1.8.18|1.8.18.*
     - mpich
-
   run:
     - hdf5 1.8.18|1.8.18.*
     - mpich
