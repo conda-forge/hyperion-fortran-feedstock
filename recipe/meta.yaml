@@ -1,4 +1,4 @@
-{% set version = "0.9.9" %}
+{% set version = "0.9.10" %}
 
 package:
   name: hyperion-fortran
@@ -7,10 +7,10 @@ package:
 source:
   fn: Hyperion-{{version}}.tar.gz
   url: https://pypi.io/packages/source/h/hyperion/Hyperion-{{version}}.tar.gz
-  md5: e1db1082e46bf69db0cc5f392b454eba
+  md5: cf067467290b51e02ea7dd56815340f0
 
 build:
-  number: 1
+  number: 0
   skip: True  # [win]
 
 requirements:
@@ -20,11 +20,11 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
   host:
-    - hdf5 1.8.18|1.8.18.*
+    - hdf5
     - mpich
 
   run:
-    - hdf5 1.8.18|1.8.18.*
+    - hdf5
     - mpich
 
 test:
