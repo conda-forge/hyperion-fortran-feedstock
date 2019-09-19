@@ -39,6 +39,7 @@ test:
 about:
   home: https://github.com/hyperion-rt/hyperion
   license: BSD 2-Clause
+  license_file: LICENSE
   summary: Hyperion Radiation Transfer Code
 
 extra:
