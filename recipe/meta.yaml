@@ -2,11 +2,11 @@
 
 package:
   name: hyperion-fortran
-  version: {{version}}
+  version: {{ version }}
 
 source:
-  fn: Hyperion-{{version}}.tar.gz
-  url: https://pypi.io/packages/source/h/hyperion/Hyperion-{{version}}.tar.gz
+  fn: Hyperion-{{ version }}.tar.gz
+  url: https://pypi.io/packages/source/h/hyperion/Hyperion-{{ version }}.tar.gz
   md5: cf067467290b51e02ea7dd56815340f0
 
 build:
@@ -40,7 +40,7 @@ test:
 
 about:
   home: https://github.com/hyperion-rt/hyperion
-  license: BSD 2-Clause
+  license: BSD-2-Clause
   license_file: LICENSE
   summary: Hyperion Radiation Transfer Code
 
