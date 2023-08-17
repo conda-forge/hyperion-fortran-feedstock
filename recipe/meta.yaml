@@ -18,6 +18,7 @@ requirements:
     - {{ compiler('fortran') }}
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
+    - make
   host:
     - hdf5 1.10.*
     - hdf5-static 1.10.*
