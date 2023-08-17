@@ -19,6 +19,7 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - make
+    - zlib
   host:
     - hdf5
     - hdf5-static
