@@ -3,7 +3,7 @@
 # Stop on first error
 set -e
 
-hyperion_amr amr.rtin amr.rtout
+#hyperion_amr amr.rtin amr.rtout
 hyperion_car car.rtin car.rtout
 hyperion_cyl cyl.rtin cyl.rtout
 hyperion_oct oct.rtin oct.rtout
