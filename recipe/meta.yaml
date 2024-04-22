@@ -1,4 +1,4 @@
-{% set version = "0.9.10" %}
+{% set version = "0.9.11" %}
 
 package:
   name: hyperion-fortran
@@ -7,7 +7,7 @@ package:
 source:
   fn: Hyperion-{{version}}.tar.gz
   url: https://pypi.io/packages/source/h/hyperion/Hyperion-{{version}}.tar.gz
-  md5: cf067467290b51e02ea7dd56815340f0
+  md5: bcbacd463810b9787eb99a2d82cc7224
 
 build:
   number: 4
@@ -44,4 +44,4 @@ about:
 
 extra:
   recipe-maintainers:
-    - astrofrog-conda-forge
+    - astrofrog
