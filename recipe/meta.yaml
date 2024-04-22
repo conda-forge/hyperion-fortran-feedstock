@@ -6,7 +6,7 @@ package:
 
 source:
   fn: Hyperion-{{ version }}.tar.gz
-  url: https://pypi.io/packages/source/h/hyperion/Hyperion-{{ version }}.tar.gz
+  url: https://pypi.io/packages/source/h/hyperion/hyperion-{{ version }}.tar.gz
   md5: bcbacd463810b9787eb99a2d82cc7224
 
 build:
