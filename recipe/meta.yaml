@@ -20,12 +20,12 @@ requirements:
     - {{ compiler('cxx') }}
     - make
   host:
-    - hdf5 1.10.*
-    - hdf5-static 1.10.*
+    - hdf5
+    - zlib
     - mpich
   run:
-    - hdf5 1.10.*
-    - hdf5-static 1.10.*
+    - hdf5
+    - zlib
     - mpich
 
 test:
