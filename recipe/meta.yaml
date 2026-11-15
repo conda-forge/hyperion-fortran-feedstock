@@ -8,9 +8,12 @@ source:
   fn: Hyperion-{{ version }}.tar.gz
   url: https://pypi.org/packages/source/h/hyperion/hyperion-{{ version }}.tar.gz
   md5: bcbacd463810b9787eb99a2d82cc7224
+  patches:
+    # the h5fc wrapper in HDF5 2 ignores HDF5_FC, which was used to build the MPI binaries
+    - 0001-mpi-compiler-with-hdf5-2-h5fc.patch
 
 build:
-  number: 5
+  number: 6
   skip: True  # [win]
 
 requirements:
@@ -20,6 +23,8 @@ requirements:
     - {{ stdlib("c") }}
     - {{ compiler('cxx') }}
     - make
+    # the h5fc wrapper in HDF5 2 calls pkg-config to find the HDF5 flags
+    - pkgconf
   host:
     - hdf5
     - zlib

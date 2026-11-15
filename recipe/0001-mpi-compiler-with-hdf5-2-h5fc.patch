@@ -1,0 +1,61 @@
+Build the MPI binaries through mpif90 when h5fc ignores HDF5_FC
+
+When no parallel HDF5 wrapper (h5pfc) is available, the MPI binaries are
+compiled with "HDF5_FLINKER=mpif90 HDF5_FC=mpif90 h5fc". The autotools-era
+h5fc shipped with HDF5 1.x honors these variables, but HDF5 2.x is built with
+CMake only and its h5fc is a new pkg-config based script that ignores them
+and always invokes the serial Fortran compiler, so linking the *_mpi binaries
+fails with undefined references to the MPI routines (mpi_init_, mpi_recv_,
+...). Detect which kind of wrapper is present and, for the new one, invert
+the nesting: run mpif90 and tell it (MPICH_FC for MPICH, OMPI_FC for Open
+MPI) to use h5fc as the underlying compiler.
+
+The old h5fc also added the linker flags HDF5 itself was built with (on
+conda-forge these include -Wl,--allow-shlib-undefined, which is needed to
+link against MPI dependencies built for a newer glibc than the sysroot). The
+new h5fc does not, so pass LDFLAGS from the environment in that case.
+
+The behavior with HDF5 1.x is unchanged.
+
+--- a/configure	2026-11-11 12:30:12.692910644 +0000
++++ b/configure	2026-11-11 12:48:34.511470553 +0000
+@@ -2038,7 +2038,17 @@
+ elif test "$parallel_compiler" == mpif90
+ then
+   mpi_compiler=`basename $(mpif90 -show | awk {'print $1'})`
+-  mpi_fc='HDF5_FLINKER=mpif90 HDF5_FC=mpif90 h5fc'
++  # The h5fc wrapper in HDF5 1.x honors HDF5_FC/HDF5_FLINKER, but the
++  # pkg-config based wrapper in HDF5 2.x ignores them and always calls the
++  # serial compiler, so in that case make mpif90 call h5fc instead. The new
++  # wrapper also no longer adds the linker flags HDF5 was built with, so
++  # pass LDFLAGS explicitly.
++  if HDF5_FLINKER=true HDF5_FC=true h5fc -c hdf5_fc_check.f90 > /dev/null 2>&1
++  then
++    mpi_fc='HDF5_FLINKER=mpif90 HDF5_FC=mpif90 h5fc'
++  else
++    mpi_fc="MPICH_FC=h5fc OMPI_FC=h5fc mpif90 $LDFLAGS"
++  fi
+ 
+ elif test "$parallel_compiler" == mpifort
+ then
+--- a/configure.ac	2026-11-11 12:30:12.692910644 +0000
++++ b/configure.ac	2026-11-11 12:48:34.511470553 +0000
+@@ -168,7 +168,17 @@
+ elif test "$parallel_compiler" == mpif90
+ then
+   mpi_compiler=`basename $(mpif90 -show | awk {'print $1'})`
+-  AC_SUBST(mpi_fc, 'HDF5_FLINKER=mpif90 HDF5_FC=mpif90 h5fc')
++  # The h5fc wrapper in HDF5 1.x honors HDF5_FC/HDF5_FLINKER, but the
++  # pkg-config based wrapper in HDF5 2.x ignores them and always calls the
++  # serial compiler, so in that case make mpif90 call h5fc instead. The new
++  # wrapper also no longer adds the linker flags HDF5 was built with, so
++  # pass LDFLAGS explicitly.
++  if HDF5_FLINKER=true HDF5_FC=true h5fc -c hdf5_fc_check.f90 > /dev/null 2>&1
++  then
++    AC_SUBST(mpi_fc, 'HDF5_FLINKER=mpif90 HDF5_FC=mpif90 h5fc')
++  else
++    AC_SUBST(mpi_fc, "MPICH_FC=h5fc OMPI_FC=h5fc mpif90 $LDFLAGS")
++  fi
+ elif test "$parallel_compiler" == mpifort
+ then
+   mpi_compiler=`basename $(mpifort -show | awk {'print $1'})`
